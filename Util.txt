@@ -1,0 +1,101 @@
+Baixar o Postman.
+
+Criar o projeto:
+Jakarta EE + RestFul.
+JAX-RS nos resources.
+
+Projeto criado automaticamente (intelliJ):
+- HelloApplication - classe principal do projeto (starta a aplicação).
+- Renomear para o nome do projeto.
+- Possui uma anotação @ApplicationPath, determinando o Path principal. Todos os paths da aplicação irão passar pela URI.
+
+
+- HelloResource - classe que possui a função de controller.
+- @Path determina o caminho deste recurso.
+- Possui um @GET, utilizado à nível de método.
+- Possui um @Produces que informa o tipo de dado esperado no retorno (JSON, TXT, etc).
+
+
+Deploy da aplicação:
+- Também inicializar com o JBoss/WildFly 35.0.1.Final.
+- Vai abrir: http://localhost:8080/exemplo_rest-1.0-SNAPSHOT/
+- Posso inserir "api/hello-world" para informar o caminho do recurso à ser acessado.
+- Final: http://localhost:8080/exemplo_rest-1.0-SNAPSHOT/api/hello-world
+
+No navegador:
+- Botão direito -> Inspecionar a página -> Network: para visualizar detalhes da requisição.
+
+No projeto:
+- Criar classe 'domain';
+- Criar o Professor;
+- Atributos, getters, setters, construtores (o de sempre).
+
+
+HelloResource:
+- Mudar o tipo de retorno para Professor;
+- Retornar um 'new Objeto(1, "Professor");
+- Mudar parâmetro da anotação @Produce para: MediaType.APPLICATION_JSON
+- Importar de: import jakarta.ws.rs.core.MediaType;
+Classe final:
+@Path("/hello-world")
+public class HelloResource {
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Professor hello() {
+        return new Professor(1, "Professor Anderson");
+    }
+}
+
+
+- Após isso, alterar para retornar uma lista:
+@Path("/hello-world")
+public class HelloResource {
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Professor> hello() {
+        ArrayList<Professor> listaProfessores = new ArrayList<>();
+        listaProfessores.add(new Professor(1, "John Doe"));
+        listaProfessores.add(new Professor(2, "Jane Doe"));
+        listaProfessores.add(new Professor(3, "Jack Doe"));
+
+        return listaProfessores;
+    }
+}
+
+- Alterar o nome do HelloResource para ProfessoresController;
+- Alterar a URI do @Path para 'professores' (nomear no plural do recurso);
+- Criar um novo método (findById):
+- Utilizado o @QueryParam
+@GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Professor findById(@QueryParam("id") Integer id) {
+        return new Professor(id, "Anderson");
+    }
+
+
+- Após isso, é necessário informar a URI de cada um dos métodos.
+- Dois métodos? Inserir @() com a URI para cada um.
+
+- No envio da requisição, informar "http://localhost:8080/exemplo_rest-1.0-SNAPSHOT/api/professores?id=1"
+- Isso serve para passar os parâmetros esperados.
+- Cuidado para não associar a palavra Query com banco de dados.
+
+
+
+- Inserir uma anotação @Path({id}) no topo do método e declarar dentro do parâmetro do método:
+- Ficará desta forma:
+@GET
+    @Path("{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Professor findById(@PathParam("id") Integer id) {
+        return new Professor(id, "Anderson");
+    }
+
+- Com isso, o envio da requisição não precisa mais de "professores?id=1", agora, podemos tratar "professores/1"
+
+
+
+
+- Criar o método de inserir utilizando @POST.
+- Basta mudar o envio da requisição para acessar esse método, caso seja o único do diretório.
+- Neste momento é necessário criar um construtor vazio.
