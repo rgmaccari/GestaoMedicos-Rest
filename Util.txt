@@ -56,30 +56,27 @@ public class HelloResource {
 
 
 - Após isso, alterar para retornar uma lista:
-@Path("/hello-world")
-public class HelloResource {
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON) //Informa o tipo de formatação esperada (JSON).
+    @Produces(MediaType.APPLICATION_JSON) //Informa o tipo que produz.
+    public Autor insert(CadastroAutorDTO autorInsertRequestDTO) throws BusinessException { //Espera um DTO.
+        AutorService autorService = new AutorService(); //Inicializa um service.
+        Autor autor = new Autor(autorInsertRequestDTO); //Passa o DTO para o service.
+
+        return autorService.inserir(autor); //Retorna o service.
+    }
+
+- Nesta classe (AutorController), apenas ocorrerá o a comunicação da camada de exposição com o Service.
+- Lembrar de alterar a anotação JAX-R.
+- Se necessário passar algum parâmetro: utilizar @Path("{id}") no header e no método: (@PathParam("{id}") int id).
+
     @GET
+    @Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Professor> hello() {
-        ArrayList<Professor> listaProfessores = new ArrayList<>();
-        listaProfessores.add(new Professor(1, "John Doe"));
-        listaProfessores.add(new Professor(2, "Jane Doe"));
-        listaProfessores.add(new Professor(3, "Jack Doe"));
-
-        return listaProfessores;
+    public Autor findById(@PathParam("id") Integer id) throws BusinessException {
+        AutorService autorService = new AutorService();
+        return new Autor();//autorService.buscarPorId(id);
     }
-}
-
-- Alterar o nome do HelloResource para ProfessoresController;
-- Alterar a URI do @Path para 'professores' (nomear no plural do recurso);
-- Criar um novo método (findById):
-- Utilizado o @QueryParam
-@GET
-    @Produces(MediaType.APPLICATION_JSON)
-    public Professor findById(@QueryParam("id") Integer id) {
-        return new Professor(id, "Anderson");
-    }
-
 
 - Após isso, é necessário informar a URI de cada um dos métodos.
 - Dois métodos? Inserir @() com a URI para cada um.
@@ -107,8 +104,56 @@ public class HelloResource {
 - Criar o método de inserir utilizando @POST.
 - Basta mudar o envio da requisição para acessar esse método, caso seja o único do diretório.
 - Neste momento é necessário criar um construtor vazio.
+--------------------------------------------------------------------------------------------------------------------
+Criar uma classe DTO para representar a exibição das exceptions (ExceptionResponseDTO);
 
 
+No controller mudar o retorno de Autor para Response.
+Envolver tudo em um try/catch.
+Transformar o retorno do try.
+Capturar a Exception com o BusinessException e personalizar o retorno de acordo com o erro.
+
+No Service, mudar a assinatura
+
+Uso do erro:
+400: Indica que a pessoa que consome a API tem condições de arrumar o erro.
+500: Problemas internos que não devem ser retornados ao usuário.
+
+Update:
+200: ok.
+404: not found.
+400: erro de validação
+500: erro interno.
+
+
+Delete:
+404: not found.
+204: tudo ok.
+400: erro de validação.
+500: erro interno.
+
+FindById:
+200: ok.
+404: acessando recurso que nao existe
+400: erro de validação
+500: erro interno
+
+Listagem:
+200: ok
+404: not found
+500: erro interno.
+
+
+Criação da tabela (exemplo):
+CREATE TABLE autor(
+    id serial primary key,
+    nome varchar(200)
+);
+
+INSERT INTO autor(nome) VALUES('Rafael');
+
+SELECT * FROM autor;
+--------------------------------------------------------------------------------------------------------------------
 O que é JAX-RS?
 JAX-RS (Java API for RESTful Web Services) é uma especificação Java que facilita a criação de serviços web RESTful. Ela usa anotações para mapear métodos Java a requisições HTTP, permitindo construir APIs que seguem o estilo arquitetural REST. Com JAX-RS, você pode criar endpoints que respondem a métodos HTTP como GET, POST, PUT e DELETE, manipulando dados em formatos como JSON ou XML.
 
