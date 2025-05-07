@@ -1,34 +1,42 @@
-Baixar o Postman.
-
 Criar o projeto:
 Jakarta EE + RestFul.
 JAX-RS nos resources.
 
 Projeto criado automaticamente (intelliJ):
-- HelloApplication - classe principal do projeto (starta a aplicação).
-- Renomear para o nome do projeto.
-- Possui uma anotação @ApplicationPath, determinando o Path principal. Todos os paths da aplicação irão passar pela URI.
+- HelloApplication: classe principal do projeto (starta a aplicação). Pode alterar para "NomeDoProjetoApplication".
+- Possui uma anotação @ApplicationPath, determinando o Path principal. Todos os paths da aplicação irão passar pela URL.
 
 
-- HelloResource - classe que possui a função de controller.
-- @Path determina o caminho deste recurso.
-- Possui um @GET, utilizado à nível de método.
-- Possui um @Produces que informa o tipo de dado esperado no retorno (JSON, TXT, etc).
+- HelloResource: classe que possui a função de controller. Pode ser renomeada para AutorController.
+- @Path determina o caminho deste recurso. Alterar para o plural do recurso (ex: "/autores").
+- Possui um @GET, utilizado à nível de método (método GET no banco).
+- Possui um @Produces que informa o tipo de dado esperado no retorno. Utilizar sempre: MediaType.APPLICATION_JSON (do pacote import jakarta.ws.rs.core.MediaType);
 
+
+Suponhamos que a aplicação seja sobre um CRUD de autores;
 
 Deploy da aplicação:
-- Também inicializar com o JBoss/WildFly 35.0.1.Final.
 - Vai abrir: http://localhost:8080/exemplo_rest-1.0-SNAPSHOT/
-- Posso inserir "api/hello-world" para informar o caminho do recurso à ser acessado.
-- Final: http://localhost:8080/exemplo_rest-1.0-SNAPSHOT/api/hello-world
+- Posso inserir "api/autores" para informar o caminho do recurso à ser acessado.
+- Final: http://localhost:8080/exemplo_rest-1.0-SNAPSHOT/api/autores.
+- Essa URL também será a que utilizaremos no Postman.
+
 
 No navegador:
 - Botão direito -> Inspecionar a página -> Network: para visualizar detalhes da requisição.
 
+
 No projeto:
 - Criar classe 'domain';
-- Criar o Professor;
+- Criar o Autor;
 - Atributos, getters, setters, construtores (o de sempre).
+
+- O construtor do Autor, recebe um 'DTO' de cadastro (ex: CadastroAutorDTO);
+- O DTO por sua vez passa os atributos que serão recebidos no corpo do JSON enviado pelo POSTMAN.
+
+- Criar camadas de comunicação: Repository, ConnectionFactory, Infrastructure, Service, etc.
+
+- No AutorController
 
 
 HelloResource:
@@ -99,3 +107,157 @@ public class HelloResource {
 - Criar o método de inserir utilizando @POST.
 - Basta mudar o envio da requisição para acessar esse método, caso seja o único do diretório.
 - Neste momento é necessário criar um construtor vazio.
+
+
+O que é JAX-RS?
+JAX-RS (Java API for RESTful Web Services) é uma especificação Java que facilita a criação de serviços web RESTful. Ela usa anotações para mapear métodos Java a requisições HTTP, permitindo construir APIs que seguem o estilo arquitetural REST. Com JAX-RS, você pode criar endpoints que respondem a métodos HTTP como GET, POST, PUT e DELETE, manipulando dados em formatos como JSON ou XML.
+
+
+@GET
+Para que serve: Indica que o método é usado para recuperar dados(Get = pegar).
+
+@GET
+@Path("/hello")
+public String getHello() {
+    return "Olá, mundo!";
+}
+Explicação: Ao acessar GET /hello, o método retorna a string "Olá, mundo!".
+
+
+
+
+
+
+@Produces
+Para que serve: Define o formato que o método retorna (JSON, XML ou texto).
+
+@GET
+@Path("/user")
+@Produces(MediaType.APPLICATION_JSON)
+public User getUser() {
+    return new User("João", 30);
+}
+Explicação: O método retorna um objeto User em formato JSON.
+
+
+
+
+
+
+@Path
+Para que serve: Define o caminho (URL) do recurso para o método ou para a classe.
+
+@Path("/users")
+public class UserResource {
+    @GET
+    public String getUsers() {
+        return "Lista de usuários";
+    }
+}
+Explicação: O método responde a GET /users.
+
+
+
+
+
+
+@PathParam
+Para que serve: Extrai um parâmetro da URI e o passa como parâmetro no método.
+
+@GET
+@Path("/user/{id}")
+public String getUserById(@PathParam("id") String id) {
+    return "Usuário com ID: " + id;
+}
+Explicação: Uma requisição GET /user/123 retorna "Usuário com ID: 123".
+
+
+
+
+
+
+@QueryParam
+Para que serve: Extrai parâmetros da query string (ex.: ?nome=valor) da URL.
+
+@GET
+@Path("/search")
+public String searchUser(@QueryParam("name") String name) {
+    return "Buscando usuário: " + name;
+}
+Explicação: Uma requisição GET /search?name=João retorna "Buscando usuário: João".
+
+
+
+
+
+
+@POST
+Para que serve: Indica que o método é usado para criar recursos.
+
+@POST
+@Path("/user")
+public String createUser(String userData) {
+    return "Usuário criado: " + userData;
+}
+Explicação: Uma requisição POST /user com corpo cria um novo usuário.
+
+
+
+
+
+
+@Consumes
+Para que serve: Define o tipo de formato que o método aceita como entrada (JSON ou XML).
+
+@POST
+@Path("/user")
+@Consumes(MediaType.APPLICATION_JSON)
+public String createUser(User user) {
+    return "Usuário criado: " + user.getName();
+}
+Explicação: O método aceita um objeto User em JSON no corpo da requisição.
+
+
+
+
+
+
+@PUT
+Para que serve: Indica que o método é usado para atualizar recursos (PUT = recolocar).
+
+@PUT
+@Path("/user/{id}")
+public String updateUser(@PathParam("id") String id, String userData) {
+    return "Usuário " + id + " atualizado: " + userData;
+}
+Explicação: Uma requisição PUT /user/123 atualiza o usuário com ID 123.
+
+
+
+
+
+
+@DELETE
+Para que serve: Indica que o método é usado para remover recursos.
+
+@DELETE
+@Path("/user/{id}")
+public String deleteUser(@PathParam("id") String id) {
+    return "Usuário " + id + " deletado";
+}
+Explicação: Uma requisição DELETE /user/123 remove o usuário com ID 123.
+
+@ApplicationPath
+Para que serve: Define o caminho base (prefixo) para todos os recursos da aplicação JAX-RS (URI principal).
+
+@ApplicationPath("/api")
+public class MyApplication extends Application {
+}
+Explicação: Todos os endpoints da aplicação serão acessados a partir de /api, como /api/users.
+
+
+
+Resumo
+@GET, @POST, @PUT e @DELETE definem o tipo de requisição, enquanto @Path, @PathParam e @QueryParam gerenciam os caminhos e parâmetros.
+@Produces e @Consumes controlam os formatos de dados.
+@ApplicationPath define o prefixo da aplicação.
