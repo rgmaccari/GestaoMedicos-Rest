@@ -25,6 +25,8 @@ public class AutorRepository {
     private static final String DELETE_BY_ID =
             "delete from autor where id = ?";
 
+    private static final String FIND_BY_ID = "SELECT * FROM medico WHERE id = ?";
+
     public Autor inserir(Autor autor) throws SQLException, NamingException {
 
         Connection conn = null;
@@ -53,7 +55,40 @@ public class AutorRepository {
         return autor;
     }
 
-    public void editar(Autor autor) throws SQLException, NamingException {
+    public Autor buscarPorId(Integer id) throws SQLException, NamingException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        Autor autor = null;
+
+        try{
+            connection = new ConnectionFactory().getConnection();
+            preparedStatement = connection.prepareStatement(FIND_BY_ID);
+            resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                autor = new Autor();
+
+                autor.setId(resultSet.getInt("id"));
+                autor.setNome(resultSet.getString("nome"));
+            }
+
+
+        }finally{
+            if(preparedStatement != null)
+                preparedStatement.close();
+
+            if(resultSet != null)
+                resultSet.close();
+
+            if(connection != null)
+                connection.close();
+        }
+        return autor;
+    }
+
+    public void update(Autor autor) throws SQLException, NamingException {
         Connection conn = null;
         PreparedStatement pstmt = null;
 
@@ -71,7 +106,7 @@ public class AutorRepository {
         }
     }
 
-    public List<Autor> buscarTodos() throws SQLException, NamingException {
+    public List<Autor> findAll() throws SQLException, NamingException {
         List<Autor> autores = new ArrayList<>();
         Connection conn = null;
         PreparedStatement pstmt = null;
@@ -115,34 +150,6 @@ public class AutorRepository {
 
     }
 
-    public List<Autor> buscarPorNome(String nome) throws SQLException, NamingException {
-        List<Autor> autores = new ArrayList<>();
-        Connection conn = null;
-        PreparedStatement pstmt = null;
-        ResultSet rs = null;
 
-        try {
-            conn = new ConnectionFactory().getConnection();
-
-            String query = FIND_ALL + " where nome like '%"+nome+"%'";
-
-            pstmt = conn.prepareStatement(query);
-            rs = pstmt.executeQuery();
-
-            while (rs.next()) {
-                Autor autor = new Autor();
-                autor.setId(rs.getInt("id"));
-                autor.setNome(rs.getString("nome"));
-                autores.add(autor);
-            }
-
-        } finally {
-            if (rs != null) rs.close();
-            if (pstmt != null) pstmt.close();
-            if (conn != null) conn.close();
-        }
-
-        return autores;
-    }
 
 }
