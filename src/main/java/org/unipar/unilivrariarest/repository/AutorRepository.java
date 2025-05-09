@@ -96,8 +96,8 @@ public class AutorRepository {
             conn = new ConnectionFactory().getConnection();
 
             pstmt = conn.prepareStatement(UPDATE);
-            pstmt.setString(1, autor.getNome());
-            pstmt.setInt(2, autor.getId());
+            pstmt.setInt(1, autor.getId());
+            pstmt.setString(2, autor.getNome());
             pstmt.executeUpdate();
 
         } finally {
@@ -132,10 +132,9 @@ public class AutorRepository {
         return autores;
     }
 
-    public void deletar(Integer id) throws SQLException, NamingException {
+    public void delete(Integer id) throws SQLException, NamingException {
         Connection conn = null;
         PreparedStatement pstmt = null;
-
         try {
 
             conn = new ConnectionFactory().getConnection();
