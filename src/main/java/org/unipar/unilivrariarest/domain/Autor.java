@@ -12,7 +12,7 @@ public class Autor {
     public Autor() { }
 
     public Autor(Integer id, CadastroAutorDTO autorInsertRequestDTO) {
-        //this.id = id;
+        this.id = id;
         this.nome = autorInsertRequestDTO.getNome();
     }
 
