@@ -306,3 +306,33 @@ Resumo
 @GET, @POST, @PUT e @DELETE definem o tipo de requisição, enquanto @Path, @PathParam e @QueryParam gerenciam os caminhos e parâmetros.
 @Produces e @Consumes controlam os formatos de dados.
 @ApplicationPath define o prefixo da aplicação.
+
+
+
+
+POST (insert)
+http://localhost:8080/unilivraria-rest-1.0-SNAPSHOT/api/autores
+Informar o JSON no Body.
+{
+	"nome": X
+}
+
+DELETE
+URL: http://localhost:8080/unilivraria-rest-1.0-SNAPSHOT/api/autores/34
+Onde 34 é o ID.
+Não há JSON uma vez que o método não consome nada e o id já é passado na URL.
+
+
+GET
+{
+	"id": X
+}
+
+
+PUT (update)
+{
+	"id": X
+	"nome": Y
+}
+
+
