@@ -104,9 +104,23 @@ public class AutorController {
 
     @DELETE
     @Path("{id}")
-    public void delete(@PathParam("id") Integer id) throws BusinessException {
-        AutorService autorService = new AutorService();
-        autorService.deletar(id);
+    public Response delete(@PathParam("id") Integer id) throws BusinessException {
+        try{
+            AutorService autorService = new AutorService();
+            autorService.delete(id);
+
+            return Response.status(Response.Status.OK).build();
+
+        }catch(BusinessException e){
+            ExceptionResponseDTO exceptionResponseDTO = new ExceptionResponseDTO(e.getMessage());
+            return Response.status(Response.Status.BAD_REQUEST).entity(exceptionResponseDTO).build();
+        }catch (NotFoundException e){
+            ExceptionResponseDTO exceptionResponseDTO = new ExceptionResponseDTO(e.getMessage());
+            return Response.status(Response.Status.NOT_FOUND).entity(exceptionResponseDTO).build();
+        }catch(Exception e){
+            ExceptionResponseDTO exceptionResponseDTO = new ExceptionResponseDTO(e.getMessage());
+            return Response.serverError().entity(exceptionResponseDTO).build();
+        }
     }
 
 
