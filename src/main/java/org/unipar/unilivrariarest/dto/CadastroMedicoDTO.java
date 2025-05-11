@@ -1,12 +1,12 @@
 package org.unipar.unilivrariarest.dto;
 
-public class CadastroAutorDTO {
+public class CadastroMedicoDTO {
 
     private String nome;
 
-    public CadastroAutorDTO(){}
+    public CadastroMedicoDTO(){}
 
-    public CadastroAutorDTO(Integer id, String nome){
+    public CadastroMedicoDTO(Integer id, String nome){
         this.nome = nome;
     }
 

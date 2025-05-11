@@ -1,23 +1,21 @@
 package org.unipar.unilivrariarest.domain;
 
-import org.unipar.unilivrariarest.dto.CadastroAutorDTO;
-import org.unipar.unilivrariarest.exceptions.BusinessException;
+import org.unipar.unilivrariarest.dto.CadastroMedicoDTO;
 
-public class Autor {
+public class Medico {
 
     private Integer id;
-
     private String nome;
 
-    public Autor() { }
+    public Medico() { }
 
-    public Autor(Integer id, CadastroAutorDTO autorInsertRequestDTO) {
+    public Medico(Integer id, CadastroMedicoDTO medicoInsertRequestDTO) {
         this.id = id;
-        this.nome = autorInsertRequestDTO.getNome();
+        this.nome = medicoInsertRequestDTO.getNome();
     }
 
-    public Autor(CadastroAutorDTO autorDTO) {
-        this.nome = autorDTO.getNome();
+    public Medico(CadastroMedicoDTO medicoDTO) {
+        this.nome = medicoDTO.getNome();
     }
 
     public Integer getId() {
