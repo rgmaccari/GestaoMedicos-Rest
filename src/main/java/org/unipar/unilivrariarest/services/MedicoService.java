@@ -21,11 +21,11 @@ public class MedicoService {
 
     public Medico insert(Medico medico) throws BusinessException, SQLException, NamingException {
         if (medico.getNome() == null || medico.getNome().isEmpty()) {
-            throw new BusinessException("Nome do medico é obrigatório");
+            throw new BusinessException("O nome do medico é obrigatório");
         }
 
         if (medico.getNome().length() > 100) {
-            throw new BusinessException("Nome do medico deve ter no máximo 100 caracteres");
+            throw new BusinessException("O nome do medico deve ter no máximo 100 caracteres");
         }
 
         medicoRepository.insert(medico);
@@ -35,15 +35,15 @@ public class MedicoService {
 
     public Medico update(Medico medico) throws BusinessException, SQLException, NamingException {
         if (medico.getId() == null) {
-            throw new BusinessException("Id do medico é obrigatório para edição");
+            throw new BusinessException("O id do medico é obrigatório para edição");
         }
 
         if (medico.getNome() == null || medico.getNome().isEmpty()) {
-            throw new BusinessException("Nome do medico é obrigatório");
+            throw new BusinessException("O nome do medico é obrigatório");
         }
 
         if (medico.getNome().length() > 100) {
-            throw new BusinessException("Nome do medico deve ter no máximo 100 caracteres");
+            throw new BusinessException("O nome do medico deve ter no máximo 100 caracteres");
         }
 
         medicoRepository.update(medico);
@@ -54,13 +54,13 @@ public class MedicoService {
     public Medico findById(Integer id) throws BusinessException, SQLException, NamingException {
 
         if (id == null || id == 0) {
-            throw new BusinessException("Nome do medico é obrigatório para busca");
+            throw new BusinessException("O id do medico é obrigatório para busca");
         }
 
         Medico medico = medicoRepository.findById(id);
 
         if(medico == null) {
-            throw new NotFoundException("Medico não encontrado");
+            throw new NotFoundException("Médico não encontrado");
         }
         return medico;
     }
@@ -68,7 +68,6 @@ public class MedicoService {
 
     public List<Medico> findAll() throws NotFoundException, SQLException, NamingException {
         List<Medico> listaMedicos = new ArrayList<>();
-        MedicoRepository medicoRepository = new MedicoRepository();
         listaMedicos = medicoRepository.findAll();
 
         if(listaMedicos == null) {
