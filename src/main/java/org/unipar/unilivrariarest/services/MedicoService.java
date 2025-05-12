@@ -2,6 +2,8 @@ package org.unipar.unilivrariarest.services;
 
 import jakarta.ws.rs.NotFoundException;
 import org.unipar.unilivrariarest.domain.Medico;
+import org.unipar.unilivrariarest.dto.CadastroMedicoDTO;
+import org.unipar.unilivrariarest.dto.ListagemMedicoDTO;
 import org.unipar.unilivrariarest.exceptions.BusinessException;
 import org.unipar.unilivrariarest.repository.MedicoRepository;
 
@@ -19,17 +21,41 @@ public class MedicoService {
     }
 
 
-    public Medico insert(Medico medico) throws BusinessException, SQLException, NamingException {
-        if (medico.getNome() == null || medico.getNome().isEmpty()) {
-            throw new BusinessException("O nome do medico é obrigatório");
+    public Medico insert(CadastroMedicoDTO medico) throws BusinessException, SQLException, NamingException {
+        if (medico.getNome() == null || medico.getNome().isEmpty() || medico.getNome().length() > 100) {
+            throw new BusinessException("O nome do medico é obrigatório e deve ter no máximo 100 caracteres.");
         }
 
-        if (medico.getNome().length() > 100) {
-            throw new BusinessException("O nome do medico deve ter no máximo 100 caracteres");
+        if (medico.getEmail() == null || medico.getEmail().isEmpty() || medico.getEmail().length() > 100) {
+            throw new BusinessException("O email do medico é obrigatório e deve ter no máximo 100 caracteres.");
         }
 
-        medicoRepository.insert(medico);
-        return medico;
+        if (medico.getTelefone() == null || medico.getTelefone() <= 0) {
+            throw new BusinessException("O telefone do medico é obrigatório.");
+        }
+
+        if (medico.getCrm() == null || medico.getCrm().isEmpty() || medico.getCrm().length() > 20) {
+            throw new BusinessException("O CRM do medico é obrigatório e deve ter no máximo 20 caracteres.");
+        }
+
+        if (medico.getEspecialidade() == null || medico.getEspecialidade().isEmpty() || medico.getEspecialidade().length() > 20) {
+            throw new BusinessException("A especialidade do medico é obrigatório e deve uma entre as opções: Ortopedia, Cardiologia, Ginecologia ou Dermatologia.");
+        }
+
+        if (medico.getLogradouro() == null || medico.getLogradouro().isEmpty() || medico.getLogradouro().length() > 50) {
+            throw new BusinessException("O logradouro é obrigatório e deve ter no máximo 50 caracteres.");
+        }
+
+        if (medico.getBairro() == null || medico.getBairro().isEmpty() || medico.getBairro().length() > 30) {
+            throw new BusinessException("O bairro é obrigatório e deve ter no máximo 30 caracteres.");
+        }
+
+        if (medico.getCidade() == null || medico.getCidade().isEmpty() || medico.getCidade().length() > 30) {
+            throw new BusinessException("A cidade é obrigatório e deve ter no máximo 30 caracteres.");
+        }
+
+        return medicoRepository.insert(medico);
+        //return medico;
     }
 
 
@@ -38,12 +64,12 @@ public class MedicoService {
             throw new BusinessException("O id do medico é obrigatório para edição");
         }
 
-        if (medico.getNome() == null || medico.getNome().isEmpty()) {
-            throw new BusinessException("O nome do medico é obrigatório");
+        if (medico.getNome() == null || medico.getNome().isEmpty() || medico.getNome().length() > 100) {
+            throw new BusinessException("O nome do medico é obrigatório e deve possuir até 100 caracteres.");
         }
 
-        if (medico.getNome().length() > 100) {
-            throw new BusinessException("O nome do medico deve ter no máximo 100 caracteres");
+        if (medico.getTelefone() == null || medico.getTelefone() <= 0) {
+            throw new BusinessException("O telefone deve ser informado.");
         }
 
         medicoRepository.update(medico);
@@ -66,9 +92,8 @@ public class MedicoService {
     }
 
 
-    public List<Medico> findAll() throws NotFoundException, SQLException, NamingException {
-        List<Medico> listaMedicos = new ArrayList<>();
-        listaMedicos = medicoRepository.findAll();
+    public List<ListagemMedicoDTO> findAll() throws NotFoundException, SQLException, NamingException {
+        List<ListagemMedicoDTO> listaMedicos = medicoRepository.findAll();
 
         if(listaMedicos == null) {
             throw new NotFoundException("Lista vazia. Nenhum medico encontrado");

@@ -336,3 +336,28 @@ PUT (update)
 }
 
 
+
+SQL:
+CREATE TABLE medico(
+	id SERIAL PRIMARY KEY,
+	nome VARCHAR(100) NOT NULL,
+	email VARCHAR(100) NOT NULL,
+	telefone BIGINT NOT NULL,
+	crm VARCHAR(20) NOT NULL,
+	especialidade VARCHAR(20) NOT NULL,
+	logradouro VARCHAR(50) NOT NULL,
+	numero INTEGER,
+	bairro VARCHAR(30) NOT NULL,
+	complemento VARCHAR(30),
+	cidade VARCHAR(30) NOT NULL
+);
+
+
+
+SELECT nome, email, crm, especialidade FROM medico ORDER BY nome asc;
+
+
+
+
+
+

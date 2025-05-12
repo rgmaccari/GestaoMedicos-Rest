@@ -1,6 +1,8 @@
 package org.unipar.unilivrariarest.repository;
 
 import org.unipar.unilivrariarest.domain.Medico;
+import org.unipar.unilivrariarest.dto.CadastroMedicoDTO;
+import org.unipar.unilivrariarest.dto.ListagemMedicoDTO;
 import org.unipar.unilivrariarest.infrastructure.ConnectionFactory;
 
 import javax.naming.NamingException;
@@ -14,46 +16,57 @@ import java.util.List;
 public class MedicoRepository {
 
     private static final String INSERT =
-            "insert into medico (nome) values (?)";
+            "INSERT INTO medico (nome, email, telefone, crm, especialidade, logradouro, numero, bairro, complemento, cidade) " +
+                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     private static final String UPDATE =
-            "update medico set nome = ? where id = ?";
+            "UPDATE medico SET nome = ?, telefone = ?, logradouro = ? WHERE id = ?";
 
     private static final String FIND_ALL =
-            "select id, nome from medico";
+                    "SELECT nome, email, crm, especialidade FROM medico ORDER BY nome asc";
 
     private static final String DELETE_BY_ID =
-            "delete from medico where id = ?";
+            "DELETE FROM medico where id = ?";
 
     private static final String FIND_BY_ID = "SELECT * FROM medico WHERE id = ?";
 
-    public Medico insert(Medico medico) throws SQLException, NamingException {
 
+    public Medico insert(CadastroMedicoDTO cadastroDTO) throws SQLException, NamingException {
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
 
+        Medico medico = new Medico(cadastroDTO);
+
         try {
-
             conn = new ConnectionFactory().getConnection();
-
             pstmt = conn.prepareStatement(INSERT, PreparedStatement.RETURN_GENERATED_KEYS);
-            pstmt.setString(1, medico.getNome());
+
+            pstmt.setString(1, cadastroDTO.getNome());
+            pstmt.setString(2, cadastroDTO.getEmail());
+            pstmt.setObject(3, cadastroDTO.getTelefone());
+            pstmt.setString(4, cadastroDTO.getCrm());
+            pstmt.setString(5, cadastroDTO.getEspecialidade());
+            pstmt.setString(6, cadastroDTO.getLogradouro());
+            pstmt.setObject(7, cadastroDTO.getNumero());
+            pstmt.setString(8, cadastroDTO.getBairro());
+            pstmt.setObject(9, cadastroDTO.getComplemento());
+            pstmt.setString(10, cadastroDTO.getCidade());
             pstmt.executeUpdate();
 
             rs = pstmt.getGeneratedKeys();
-
-            rs.next();
-            medico.setId(rs.getInt(1));
+            if (rs.next()) {
+                medico.setId(rs.getInt(1));
+            }
 
         } finally {
             if (pstmt != null) pstmt.close();
             if (rs != null) rs.close();
             if (conn != null) conn.close();
         }
-
         return medico;
     }
+
 
     public void update(Medico medico) throws SQLException, NamingException {
         Connection conn = null;
@@ -63,8 +76,10 @@ public class MedicoRepository {
             conn = new ConnectionFactory().getConnection();
 
             pstmt = conn.prepareStatement(UPDATE);
-            pstmt.setInt(1, medico.getId());
-            pstmt.setString(2, medico.getNome());
+            pstmt.setInt(4, medico.getId());
+            pstmt.setString(1, medico.getNome());
+            pstmt.setLong(2, medico.getTelefone());
+            pstmt.setString(3, medico.getLogradouro());
             pstmt.executeUpdate();
 
         } finally {
@@ -72,6 +87,7 @@ public class MedicoRepository {
             if (conn != null) conn.close();
         }
     }
+
 
     public Medico findById(Integer id) throws SQLException, NamingException {
         Connection connection = null;
@@ -106,8 +122,9 @@ public class MedicoRepository {
         return medico;
     }
 
-    public List<Medico> findAll() throws SQLException, NamingException {
-        List<Medico> medicos = new ArrayList<>();
+
+    public List<ListagemMedicoDTO> findAll() throws SQLException, NamingException {
+        List<ListagemMedicoDTO> medicos = new ArrayList<>();
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -118,9 +135,12 @@ public class MedicoRepository {
             rs = pstmt.executeQuery();
 
             while (rs.next()) {
-                Medico medico = new Medico();
+                ListagemMedicoDTO medico = new ListagemMedicoDTO();
                 medico.setId(rs.getInt("id"));
                 medico.setNome(rs.getString("nome"));
+                medico.setEmail(rs.getString("email"));
+                medico.setCrm(rs.getString("crm"));
+                medico.setEspecialidade(rs.getString("especialidade"));
                 medicos.add(medico);
             }
         } finally {
