@@ -1,0 +1,174 @@
+package org.unipar.unilivrariarest.repository;
+
+import org.unipar.unilivrariarest.domain.Medico;
+import org.unipar.unilivrariarest.dto.CadastroMedicoDTO;
+import org.unipar.unilivrariarest.dto.ListagemMedicoDTO;
+import org.unipar.unilivrariarest.infrastructure.ConnectionFactory;
+
+import javax.naming.NamingException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+public class MedicoRepository {
+
+    private static final String INSERT =
+            "INSERT INTO medico (nome, email, telefone, crm, especialidade, logradouro, numero, bairro, complemento, cidade) " +
+                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+    private static final String UPDATE =
+            "UPDATE medico SET nome = ?, telefone = ?, logradouro = ? WHERE id = ?";
+
+    private static final String FIND_ALL =
+                    "SELECT nome, email, crm, especialidade FROM medico ORDER BY nome asc";
+
+    private static final String DELETE_BY_ID =
+            "DELETE FROM medico where id = ?";
+
+    private static final String FIND_BY_ID = "SELECT * FROM medico WHERE id = ?";
+
+
+    public Medico insert(CadastroMedicoDTO cadastroDTO) throws SQLException, NamingException {
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+
+        Medico medico = new Medico(cadastroDTO);
+
+        try {
+            conn = new ConnectionFactory().getConnection();
+            pstmt = conn.prepareStatement(INSERT, PreparedStatement.RETURN_GENERATED_KEYS);
+
+            pstmt.setString(1, cadastroDTO.getNome());
+            pstmt.setString(2, cadastroDTO.getEmail());
+            pstmt.setObject(3, cadastroDTO.getTelefone());
+            pstmt.setString(4, cadastroDTO.getCrm());
+            pstmt.setString(5, cadastroDTO.getEspecialidade());
+            pstmt.setString(6, cadastroDTO.getLogradouro());
+            pstmt.setObject(7, cadastroDTO.getNumero());
+            pstmt.setString(8, cadastroDTO.getBairro());
+            pstmt.setObject(9, cadastroDTO.getComplemento());
+            pstmt.setString(10, cadastroDTO.getCidade());
+            pstmt.executeUpdate();
+
+            rs = pstmt.getGeneratedKeys();
+            if (rs.next()) {
+                medico.setId(rs.getInt(1));
+            }
+
+        } finally {
+            if (pstmt != null) pstmt.close();
+            if (rs != null) rs.close();
+            if (conn != null) conn.close();
+        }
+        return medico;
+    }
+
+
+    public void update(Medico medico) throws SQLException, NamingException {
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+
+        try {
+            conn = new ConnectionFactory().getConnection();
+
+            pstmt = conn.prepareStatement(UPDATE);
+            pstmt.setInt(4, medico.getId());
+            pstmt.setString(1, medico.getNome());
+            pstmt.setLong(2, medico.getTelefone());
+            pstmt.setString(3, medico.getLogradouro());
+            pstmt.executeUpdate();
+
+        } finally {
+            if (pstmt != null) pstmt.close();
+            if (conn != null) conn.close();
+        }
+    }
+
+
+    public Medico findById(Integer id) throws SQLException, NamingException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        Medico medico = null;
+
+        try{
+            connection = new ConnectionFactory().getConnection();
+            preparedStatement = connection.prepareStatement(FIND_BY_ID);
+            resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                medico = new Medico();
+
+                medico.setId(resultSet.getInt("id"));
+                medico.setNome(resultSet.getString("nome"));
+            }
+
+
+        }finally{
+            if(preparedStatement != null)
+                preparedStatement.close();
+
+            if(resultSet != null)
+                resultSet.close();
+
+            if(connection != null)
+                connection.close();
+        }
+        return medico;
+    }
+
+
+    public List<ListagemMedicoDTO> findAll() throws SQLException, NamingException {
+        List<ListagemMedicoDTO> medicos = new ArrayList<>();
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+
+        try {
+            conn = new ConnectionFactory().getConnection();
+            pstmt = conn.prepareStatement(FIND_ALL);
+            rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                ListagemMedicoDTO medico = new ListagemMedicoDTO();
+                medico.setId(rs.getInt("id"));
+                medico.setNome(rs.getString("nome"));
+                medico.setEmail(rs.getString("email"));
+                medico.setCrm(rs.getString("crm"));
+                medico.setEspecialidade(rs.getString("especialidade"));
+                medicos.add(medico);
+            }
+        } finally {
+            if (rs != null) rs.close();
+            if (pstmt != null) pstmt.close();
+            if (conn != null) conn.close();
+        }
+
+        return medicos;
+    }
+
+    public void delete(Integer id) throws SQLException, NamingException {
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        try {
+
+            conn = new ConnectionFactory().getConnection();
+            pstmt = conn.prepareStatement(DELETE_BY_ID);
+            pstmt.setInt(1, id);
+            pstmt.executeUpdate();
+
+        } finally {
+            if (pstmt != null) pstmt.close();
+            if (conn != null) conn.close();
+        }
+
+    }
+
+
+
+}
