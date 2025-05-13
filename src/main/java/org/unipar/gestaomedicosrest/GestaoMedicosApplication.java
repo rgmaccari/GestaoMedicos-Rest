@@ -1,4 +1,4 @@
-package org.unipar.unilivrariarest;
+package org.unipar.gestaomedicosrest;
 
 import jakarta.ws.rs.ApplicationPath;
 import jakarta.ws.rs.core.Application;

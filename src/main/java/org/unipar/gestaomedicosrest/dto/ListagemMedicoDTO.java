@@ -1,4 +1,4 @@
-package org.unipar.unilivrariarest.dto;
+package org.unipar.gestaomedicosrest.dto;
 
 public class ListagemMedicoDTO {
     //SELECT nome, email, crm, especialidade FROM medico ORDER BY nome asc;

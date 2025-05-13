@@ -1,6 +1,6 @@
-package org.unipar.unilivrariarest.domain;
+package org.unipar.gestaomedicosrest.domain;
 
-import org.unipar.unilivrariarest.dto.CadastroPacienteDTO;
+import org.unipar.gestaomedicosrest.dto.CadastroPacienteDTO;
 
 public class Paciente {
     private Integer id;

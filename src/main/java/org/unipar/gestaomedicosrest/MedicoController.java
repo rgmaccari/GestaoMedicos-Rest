@@ -1,12 +1,12 @@
-package org.unipar.unilivrariarest;
+package org.unipar.gestaomedicosrest;
 
 import jakarta.ws.rs.core.Response;
-import org.unipar.unilivrariarest.domain.Medico;
-import org.unipar.unilivrariarest.dto.CadastroMedicoDTO;
-import org.unipar.unilivrariarest.dto.ExceptionResponseDTO;
-import org.unipar.unilivrariarest.dto.ListagemMedicoDTO;
-import org.unipar.unilivrariarest.exceptions.BusinessException;
-import org.unipar.unilivrariarest.services.MedicoService;
+import org.unipar.gestaomedicosrest.domain.Medico;
+import org.unipar.gestaomedicosrest.dto.CadastroMedicoDTO;
+import org.unipar.gestaomedicosrest.dto.ExceptionResponseDTO;
+import org.unipar.gestaomedicosrest.dto.ListagemMedicoDTO;
+import org.unipar.gestaomedicosrest.exceptions.BusinessException;
+import org.unipar.gestaomedicosrest.services.MedicoService;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 

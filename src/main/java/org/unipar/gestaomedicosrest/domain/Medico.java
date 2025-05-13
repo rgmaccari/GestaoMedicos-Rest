@@ -1,6 +1,6 @@
-package org.unipar.unilivrariarest.domain;
+package org.unipar.gestaomedicosrest.domain;
 
-import org.unipar.unilivrariarest.dto.CadastroMedicoDTO;
+import org.unipar.gestaomedicosrest.dto.CadastroMedicoDTO;
 
 public class Medico {
 

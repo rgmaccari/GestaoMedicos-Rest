@@ -1,7 +1,7 @@
-package org.unipar.unilivrariarest.repository;
+package org.unipar.gestaomedicosrest.repository;
 
-import org.unipar.unilivrariarest.domain.Paciente;
-import org.unipar.unilivrariarest.infrastructure.ConnectionFactory;
+import org.unipar.gestaomedicosrest.domain.Paciente;
+import org.unipar.gestaomedicosrest.infrastructure.ConnectionFactory;
 
 import javax.naming.NamingException;
 import java.sql.Connection;

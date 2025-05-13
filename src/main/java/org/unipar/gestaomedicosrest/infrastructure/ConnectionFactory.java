@@ -1,4 +1,4 @@
-package org.unipar.unilivrariarest.infrastructure;
+package org.unipar.gestaomedicosrest.infrastructure;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;

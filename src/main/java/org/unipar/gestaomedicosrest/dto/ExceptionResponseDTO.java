@@ -1,4 +1,4 @@
-package org.unipar.unilivrariarest.dto;
+package org.unipar.gestaomedicosrest.dto;
 
 public class ExceptionResponseDTO {
     private String mensagem;

@@ -1,9 +1,9 @@
-package org.unipar.unilivrariarest.services;
+package org.unipar.gestaomedicosrest.services;
 
 import jakarta.ws.rs.NotFoundException;
-import org.unipar.unilivrariarest.domain.Paciente;
-import org.unipar.unilivrariarest.exceptions.BusinessException;
-import org.unipar.unilivrariarest.repository.PacienteRepository;
+import org.unipar.gestaomedicosrest.domain.Paciente;
+import org.unipar.gestaomedicosrest.exceptions.BusinessException;
+import org.unipar.gestaomedicosrest.repository.PacienteRepository;
 
 import javax.naming.NamingException;
 import java.sql.SQLException;

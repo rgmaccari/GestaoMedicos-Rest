@@ -1,9 +1,9 @@
-package org.unipar.unilivrariarest.repository;
+package org.unipar.gestaomedicosrest.repository;
 
-import org.unipar.unilivrariarest.domain.Medico;
-import org.unipar.unilivrariarest.dto.CadastroMedicoDTO;
-import org.unipar.unilivrariarest.dto.ListagemMedicoDTO;
-import org.unipar.unilivrariarest.infrastructure.ConnectionFactory;
+import org.unipar.gestaomedicosrest.domain.Medico;
+import org.unipar.gestaomedicosrest.dto.CadastroMedicoDTO;
+import org.unipar.gestaomedicosrest.dto.ListagemMedicoDTO;
+import org.unipar.gestaomedicosrest.infrastructure.ConnectionFactory;
 
 import javax.naming.NamingException;
 import java.sql.Connection;

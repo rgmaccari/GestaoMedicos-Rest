@@ -1,15 +1,14 @@
-package org.unipar.unilivrariarest.services;
+package org.unipar.gestaomedicosrest.services;
 
 import jakarta.ws.rs.NotFoundException;
-import org.unipar.unilivrariarest.domain.Medico;
-import org.unipar.unilivrariarest.dto.CadastroMedicoDTO;
-import org.unipar.unilivrariarest.dto.ListagemMedicoDTO;
-import org.unipar.unilivrariarest.exceptions.BusinessException;
-import org.unipar.unilivrariarest.repository.MedicoRepository;
+import org.unipar.gestaomedicosrest.domain.Medico;
+import org.unipar.gestaomedicosrest.dto.CadastroMedicoDTO;
+import org.unipar.gestaomedicosrest.dto.ListagemMedicoDTO;
+import org.unipar.gestaomedicosrest.exceptions.BusinessException;
+import org.unipar.gestaomedicosrest.repository.MedicoRepository;
 
 import javax.naming.NamingException;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class MedicoService {
