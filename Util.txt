@@ -309,33 +309,44 @@ Resumo
 
 
 
-
-POST (insert)
+POST (insert):
 http://localhost:8080/unilivraria-rest-1.0-SNAPSHOT/api/autores
 Informar o JSON no Body.
 {
-	"nome": X
+  "nome": "João Silva",
+  "email": "joao.silva@email.com",
+  "telefone": 11987654321,
+  "crm": "CRM12345",
+  "especialidade": "Cardiologia",
+  "logradouro": "Rua das Flores",
+  "numero": 123,
+  "bairro": "Centro",
+  "complemento": "Apto 45",
+  "cidade": "São Paulo"
 }
 
-DELETE
-URL: http://localhost:8080/unilivraria-rest-1.0-SNAPSHOT/api/autores/34
-Onde 34 é o ID.
+
+DELETE (delete):
+http://localhost:8080/unilivraria-rest-1.0-SNAPSHOT/api/medicos/2
+Onde 2 é o ID.
 Não há JSON uma vez que o método não consome nada e o id já é passado na URL.
 
 
-GET
+
+PUT (update):
+http://localhost:8080/unilivraria-rest-1.0-SNAPSHOT/api/medicos/1
+Onde 1 é o ID;
 {
-	"id": X
+  "nome": "Marcinho Sensação",
+  "telefone": 5555555555,
+  "logradouro": "Avenida Brasil"
 }
 
 
-PUT (update)
-{
-	"id": X
-	"nome": Y
-}
+GET (find):
+FindAll: http://localhost:8080/unilivraria-rest-1.0-SNAPSHOT/api/medicos
 
-
+FindById: http://localhost:8080/unilivraria-rest-1.0-SNAPSHOT/api/medicos/3
 
 SQL:
 CREATE TABLE medico(
@@ -351,6 +362,8 @@ CREATE TABLE medico(
 	complemento VARCHAR(30),
 	cidade VARCHAR(30) NOT NULL
 );
+
+
 
 
 

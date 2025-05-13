@@ -23,7 +23,7 @@ public class MedicoRepository {
             "UPDATE medico SET nome = ?, telefone = ?, logradouro = ? WHERE id = ?";
 
     private static final String FIND_ALL =
-                    "SELECT nome, email, crm, especialidade FROM medico ORDER BY nome asc";
+                    "SELECT id, nome, email, crm, especialidade FROM medico ORDER BY nome asc";
 
     private static final String DELETE_BY_ID =
             "DELETE FROM medico where id = ?";
@@ -99,6 +99,7 @@ public class MedicoRepository {
         try{
             connection = new ConnectionFactory().getConnection();
             preparedStatement = connection.prepareStatement(FIND_BY_ID);
+            preparedStatement.setInt(1, id);
             resultSet = preparedStatement.executeQuery();
 
             if (resultSet.next()) {
@@ -106,6 +107,9 @@ public class MedicoRepository {
 
                 medico.setId(resultSet.getInt("id"));
                 medico.setNome(resultSet.getString("nome"));
+                medico.setEmail(resultSet.getString("email"));
+                medico.setCrm(resultSet.getString("crm"));
+                medico.setEspecialidade(resultSet.getString("especialidade"));
             }
 
 
