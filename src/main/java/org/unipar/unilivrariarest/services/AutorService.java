@@ -77,18 +77,13 @@ public class AutorService {
 
 
 
-    public void deletar(Integer id) throws BusinessException {
+    public void delete(Integer id) throws BusinessException, SQLException, NamingException {
 
         if (id == null) {
             throw new BusinessException("Id do autor é obrigatório para exclusão");
         }
 
-        try {
-            autorRepository.deletar(id);
-        } catch (SQLException | NamingException e) {
-            e.printStackTrace();
-            throw new BusinessException("Erro ao deletar autor. Entre o contato com o suporte do WebService");
-        }
+        autorRepository.delete(id);
     }
 
 }
