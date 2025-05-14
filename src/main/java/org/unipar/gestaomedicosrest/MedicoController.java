@@ -5,6 +5,7 @@ import org.unipar.gestaomedicosrest.domain.Medico;
 import org.unipar.gestaomedicosrest.dto.CadastroMedicoDTO;
 import org.unipar.gestaomedicosrest.dto.ExceptionResponseDTO;
 import org.unipar.gestaomedicosrest.dto.ListagemMedicoDTO;
+import org.unipar.gestaomedicosrest.dto.UpdateMedicoDto;
 import org.unipar.gestaomedicosrest.exceptions.BusinessException;
 import org.unipar.gestaomedicosrest.services.MedicoService;
 import jakarta.ws.rs.*;
@@ -83,10 +84,10 @@ public class MedicoController {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     @Path("{id}")
-    public Response update(@PathParam("id") Integer id, CadastroMedicoDTO medicoInsertRequestDTO) throws BusinessException {
+    public Response update(@PathParam("id") Integer id, UpdateMedicoDto dto) throws BusinessException {
         try {
             MedicoService medicoService = new MedicoService();
-            Medico medico = new Medico(medicoInsertRequestDTO);
+            Medico medico = new Medico(id, dto);
             return Response.status(Response.Status.OK).entity(medicoService.update(medico)).build();
         }catch (BusinessException e){
             ExceptionResponseDTO exceptionResponseDTO = new ExceptionResponseDTO(e.getMessage());

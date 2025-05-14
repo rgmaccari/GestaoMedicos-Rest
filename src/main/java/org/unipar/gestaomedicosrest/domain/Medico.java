@@ -1,6 +1,7 @@
 package org.unipar.gestaomedicosrest.domain;
 
 import org.unipar.gestaomedicosrest.dto.CadastroMedicoDTO;
+import org.unipar.gestaomedicosrest.dto.UpdateMedicoDto;
 
 
 public class Medico {
@@ -20,7 +21,7 @@ public class Medico {
 
     public Medico() { }
 
-    public Medico(Integer id, CadastroMedicoDTO medicoInsertRequestDTO) {
+    public Medico(CadastroMedicoDTO medicoInsertRequestDTO) {
         this.id = id;
         this.nome = medicoInsertRequestDTO.getNome();
         this.email = medicoInsertRequestDTO.getEmail();
@@ -33,6 +34,13 @@ public class Medico {
         this.numero = medicoInsertRequestDTO.getNumero();
         this.complemento = medicoInsertRequestDTO.getComplemento();
         this.ativo = true;
+    }
+
+    public Medico(Integer id, UpdateMedicoDto dto){
+        this.id = id;
+        this.nome = dto.getNome();
+        this.telefone = dto.getTelefone();
+        this.logradouro = dto.getLogradouro();
     }
 
 
