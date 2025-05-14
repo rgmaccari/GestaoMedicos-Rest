@@ -31,6 +31,7 @@ public class MedicoController {
             return Response.status(Response.Status.BAD_REQUEST).entity(exceptionResponseDTO).build();
 
         } catch (Exception e) {
+            e.printStackTrace();
             ExceptionResponseDTO exceptionResponseDTO = new ExceptionResponseDTO("Ocorreu um erro interno.");
             return Response.serverError().entity(exceptionResponseDTO).build();
         }
@@ -85,7 +86,7 @@ public class MedicoController {
     public Response update(@PathParam("id") Integer id, CadastroMedicoDTO medicoInsertRequestDTO) throws BusinessException {
         try {
             MedicoService medicoService = new MedicoService();
-            Medico medico = new Medico(id, medicoInsertRequestDTO);
+            Medico medico = new Medico(medicoInsertRequestDTO);
             return Response.status(Response.Status.OK).entity(medicoService.update(medico)).build();
         }catch (BusinessException e){
             ExceptionResponseDTO exceptionResponseDTO = new ExceptionResponseDTO(e.getMessage());

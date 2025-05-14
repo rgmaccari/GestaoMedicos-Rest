@@ -16,17 +16,17 @@ import java.util.List;
 public class MedicoRepository {
 
     private static final String INSERT =
-            "INSERT INTO medico (nome, email, telefone, crm, especialidade, logradouro, numero, bairro, complemento, cidade) " +
-                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            "INSERT INTO medico (nome, email, telefone, crm, especialidade, logradouro, numero, bairro, complemento, cidade, ativo) " +
+                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, true)";
 
     private static final String UPDATE =
             "UPDATE medico SET nome = ?, telefone = ?, logradouro = ? WHERE id = ?";
 
     private static final String FIND_ALL =
-                    "SELECT id, nome, email, crm, especialidade FROM medico ORDER BY nome asc";
+                    "SELECT id, nome, email, crm, especialidade FROM medico ORDER BY nome asc WHERE ativo=true";
 
     private static final String DELETE_BY_ID =
-            "DELETE FROM medico where id = ?";
+            "UPDATE medico SET ativo = false where id = ?";
 
     private static final String FIND_BY_ID = "SELECT * FROM medico WHERE id = ?";
 
@@ -58,7 +58,12 @@ public class MedicoRepository {
             if (rs.next()) {
                 medico.setId(rs.getInt(1));
             }
-
+        } catch (SQLException e) {
+            System.err.println("SQLException: " + e.getMessage());
+            throw e;
+        } catch (NamingException e) {
+            System.err.println("NamingException: " + e.getMessage());
+            throw e;
         } finally {
             if (pstmt != null) pstmt.close();
             if (rs != null) rs.close();

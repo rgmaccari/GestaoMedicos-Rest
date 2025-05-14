@@ -2,6 +2,7 @@ package org.unipar.gestaomedicosrest.domain;
 
 import org.unipar.gestaomedicosrest.dto.CadastroMedicoDTO;
 
+
 public class Medico {
 
     private Integer id;
@@ -15,6 +16,7 @@ public class Medico {
     private String bairro;
     private String complemento;
     private String cidade;
+    private boolean ativo;
 
     public Medico() { }
 
@@ -30,10 +32,9 @@ public class Medico {
         this.cidade = medicoInsertRequestDTO.getCidade();
         this.numero = medicoInsertRequestDTO.getNumero();
         this.complemento = medicoInsertRequestDTO.getComplemento();
+        this.ativo = true;
     }
 
-    public Medico(CadastroMedicoDTO medicoInsertRequestDTO) {
-    }
 
     public Integer getId() {
         return id;
@@ -122,20 +123,28 @@ public class Medico {
     public void setCidade(String cidade) {
         this.cidade = cidade;
     }
+
+    public boolean isAtivo() {
+        return ativo;
+    }
+
+    public void setAtivo(boolean ativo) {
+        this.ativo = ativo;
+    }
 }
 
-/**
- * CREATE TABLE medico(
- * 	id SERIAL PRIMARY KEY,
- * 	nome VARCHAR(100) NOT NULL,
- * 	email VARCHAR(100) NOT NULL,
- * 	telefone BIGINT NOT NULL,
- * 	crm VARCHAR(20) NOT NULL,
- * 	especialidade VARCHAR(20) NOT NULL,
- * 	logradouro VARCHAR(50) NOT NULL,
- * 	numero INTEGER,
- * 	bairro VARCHAR(30) NOT NULL,
- * 	complemento VARCHAR(30),
- * 	cidade VARCHAR(30) NOT NULL
- * );
- * */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

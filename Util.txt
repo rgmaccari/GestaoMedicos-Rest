@@ -361,6 +361,7 @@ CREATE TABLE medico(
 	bairro VARCHAR(30) NOT NULL,
 	complemento VARCHAR(30),
 	cidade VARCHAR(30) NOT NULL
+	ativo BOOLEAN DEFAULT TRUE
 );
 
 
