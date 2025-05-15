@@ -364,6 +364,21 @@ CREATE TABLE medico(
 	ativo BOOLEAN DEFAULT TRUE
 );
 
+CREATE TABLE paciente(
+    id SERIAL PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    email VARCHAR(100) NOT NULL,
+    telefone BIGINT NOT NULL,
+    cpf VARCHAR(20) NOT NULL,
+    logradouro VARCHAR(50) NOT NULL,
+    numero INTEGER,
+    complemento VARCHAR(30),
+    bairro VARCHAR(30) NOT NULL,
+    cidade VARCHAR(30) NOT NULL,
+    uf VARCHAR(2) NOT NULL,
+    cep BIGINT NOT NULL,
+    ativo BOOLEAN DEFAULT TRUE
+);
 
 
 

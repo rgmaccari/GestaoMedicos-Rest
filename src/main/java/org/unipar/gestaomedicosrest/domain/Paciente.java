@@ -7,7 +7,7 @@ public class Paciente {
     private Integer id;
     private String nome;
     private String email;
-    private String telefone;
+    private Long telefone;
     private String cpf;
     private String logradouro;
     private Integer numero;
@@ -39,7 +39,6 @@ public class Paciente {
         this.nome = dto.getNome();
         this.telefone = dto.getTelefone();
         this.logradouro = dto.getLogradouro();
-        this.email = dto.getEmail();
     }
 
     public Paciente(String nome){
@@ -70,11 +69,11 @@ public class Paciente {
         this.email = email;
     }
 
-    public String getTelefone() {
+    public Long getTelefone() {
         return telefone;
     }
 
-    public void setTelefone(String telefone) {
+    public void setTelefone(Long telefone) {
         this.telefone = telefone;
     }
 

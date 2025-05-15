@@ -3,7 +3,7 @@ package org.unipar.gestaomedicosrest.dto;
 public class CadastroPacienteDTO {
     private String nome;
     private String email;
-    private String telefone;
+    private Long telefone;
     private String cpf;
     private String logradouro;
     private Integer numero;
@@ -16,7 +16,7 @@ public class CadastroPacienteDTO {
     public CadastroPacienteDTO(){
     }
 
-    public CadastroPacienteDTO(String nome, String email, String telefone, String cpf, String logradouro, Integer numero, String complemento, String bairro, String cidade, String uf, Long cep) {
+    public CadastroPacienteDTO(String nome, String email, Long telefone, String cpf, String logradouro, Integer numero, String complemento, String bairro, String cidade, String uf, Long cep) {
         this.nome = nome;
         this.email = email;
         this.telefone = telefone;
@@ -46,11 +46,11 @@ public class CadastroPacienteDTO {
         this.email = email;
     }
 
-    public String getTelefone() {
+    public Long getTelefone() {
         return telefone;
     }
 
-    public void setTelefone(String telefone) {
+    public void setTelefone(Long telefone) {
         this.telefone = telefone;
     }
 
