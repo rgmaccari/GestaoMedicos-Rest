@@ -312,6 +312,7 @@ Resumo
 POST (insert):
 http://localhost:8080/unilivraria-rest-1.0-SNAPSHOT/api/autores
 Informar o JSON no Body.
+Médico:
 {
   "nome": "João Silva",
   "email": "joao.silva@email.com",
@@ -323,6 +324,22 @@ Informar o JSON no Body.
   "bairro": "Centro",
   "complemento": "Apto 45",
   "cidade": "São Paulo"
+}
+
+
+Paciente:
+{
+  "nome": "João Silva",
+  "email": "joao.silva@email.com",
+  "telefone": 11987654321,
+  "cpf": "12345678900",
+  "logradouro": "Rua das Flores",
+  "numero": 123,
+  "complemento": "Apto 45",
+  "bairro": "Centro",
+  "cidade": "São Paulo",
+  "uf": "SP",
+  "cep": 12345678
 }
 
 

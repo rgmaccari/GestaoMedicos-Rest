@@ -23,7 +23,7 @@ public class MedicoRepository {
             "UPDATE medico SET nome = ?, telefone = ?, logradouro = ? WHERE id = ?";
 
     private static final String FIND_ALL =
-                    "SELECT id, nome, email, crm, especialidade FROM medico WHERE ativo = true ORDER BY nome asc";
+            "SELECT id, nome, email, crm, especialidade FROM medico WHERE ativo = true ORDER BY nome asc";
 
     private static final String DELETE_BY_ID =
             "UPDATE medico SET ativo = false where id = ?";

@@ -28,7 +28,7 @@ public class PacienteRepository {
     private static final String DELETE_BY_ID =
             "UPDATE paciente SET ativo = false where id = ?";
 
-    private static final String FIND_BY_ID = "SELECT nome, email, cpf FROM paciente WHERE id = ?";
+    private static final String FIND_BY_ID = "SELECT * FROM paciente WHERE id = ?";
 
 
     public Paciente insert(CadastroPacienteDTO cadastroDTO) throws SQLException, NamingException {
@@ -47,8 +47,8 @@ public class PacienteRepository {
             pstmt.setLong(3, cadastroDTO.getTelefone());
             pstmt.setString(4, cadastroDTO.getCpf());
             pstmt.setString(5, cadastroDTO.getLogradouro());
-            pstmt.setInt(6, cadastroDTO.getNumero());
-            pstmt.setString(7, cadastroDTO.getComplemento());
+            pstmt.setObject(6, cadastroDTO.getNumero());
+            pstmt.setObject(7, cadastroDTO.getComplemento());
             pstmt.setString(8, cadastroDTO.getBairro());
             pstmt.setString(9, cadastroDTO.getCidade());
             pstmt.setString(10, cadastroDTO.getUf());

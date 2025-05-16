@@ -44,6 +44,7 @@ public class MedicoController {
     public Response findById(@PathParam("id") Integer id) throws BusinessException {
         try{
             MedicoService medicoService = new MedicoService();
+
             //return Response.status(Response.Status.FOUND).entity(medicoService.buscarPorId(id)).build();
             return Response.status(Response.Status.OK).entity(medicoService.findById(id)).build();
         }catch (BusinessException e){
