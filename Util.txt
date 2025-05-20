@@ -365,6 +365,14 @@ FindAll: http://localhost:8080/unilivraria-rest-1.0-SNAPSHOT/api/medicos
 
 FindById: http://localhost:8080/unilivraria-rest-1.0-SNAPSHOT/api/medicos/3
 
+
+
+
+
+
+
+
+
 SQL:
 CREATE TABLE medico(
 	id SERIAL PRIMARY KEY,
@@ -397,11 +405,12 @@ CREATE TABLE paciente(
     ativo BOOLEAN DEFAULT TRUE
 );
 
-
-
-
-SELECT nome, email, crm, especialidade FROM medico ORDER BY nome asc;
-
+CREATE TABLE consulta(
+    id SERIAL PRIMARY KEY,
+    medico_id INTEGER NOT NULL,
+    paciente_id INTEGER NOT NULL,
+    data_hora DATETIME NOT NULL
+);
 
 
 
