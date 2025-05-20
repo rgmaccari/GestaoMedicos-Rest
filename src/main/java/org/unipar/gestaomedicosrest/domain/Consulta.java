@@ -9,6 +9,7 @@ public class Consulta {
     private Integer medico_id;
     private Integer paciente_id;
     private LocalDateTime data_hora;
+    private boolean ativo;
 
     public Consulta(){}
 
@@ -16,6 +17,7 @@ public class Consulta {
         this.medico_id = dto.getMedico_id();
         this.paciente_id = dto.getPaciente_id();
         this.data_hora = dto.getData_hora();
+        this.ativo = true;
     }
 
     public LocalDateTime getData_hora() {

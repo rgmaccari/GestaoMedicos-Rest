@@ -10,6 +10,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,6 +30,9 @@ public class MedicoRepository {
             "UPDATE medico SET ativo = false where id = ?";
 
     private static final String FIND_BY_ID = "SELECT * FROM medico WHERE id = ?";
+
+    private static final String FIND_DISPONIBILIDADE = "SELECT m.id, m.nome, m.ativo FROM medico m " +
+                    "WHERE m.ativo = true AND m.id NOT IN (SELECT c.medico_id FROM consulta c WHERE c.data_hora = ? AND c.ativo = true)";
 
 
     public Medico insert(CadastroMedicoDTO cadastroDTO) throws SQLException, NamingException {
@@ -176,6 +180,40 @@ public class MedicoRepository {
             if (conn != null) conn.close();
         }
 
+    }
+
+    public List<Medico> findDisponibilidadeMedico(LocalDateTime dataHora) throws SQLException, NamingException {
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        List<Medico> medicos = new ArrayList<>();
+
+        try {
+            conn = new ConnectionFactory().getConnection();
+            pstmt = conn.prepareStatement(FIND_DISPONIBILIDADE);
+            pstmt.setObject(1, dataHora);
+            rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                Medico medico = new Medico();
+                medico.setId(rs.getInt("id"));
+                medico.setNome(rs.getString("nome"));
+                medico.setAtivo(rs.getBoolean("ativo"));
+                medicos.add(medico);
+            }
+        } catch (SQLException e) {
+            System.err.println("SQLException: " + e.getMessage());
+            throw e;
+        } catch (NamingException e) {
+            System.err.println("NamingException: " + e.getMessage());
+            throw e;
+        } finally {
+            if (rs != null) rs.close();
+            if (pstmt != null) pstmt.close();
+            if (conn != null) conn.close();
+        }
+
+        return medicos;
     }
 
 

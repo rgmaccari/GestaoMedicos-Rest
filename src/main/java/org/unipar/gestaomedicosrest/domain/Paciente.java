@@ -16,6 +16,7 @@ public class Paciente {
     private String cidade;
     private String uf;
     private Long cep;
+    private boolean ativo;
 
     public Paciente(){}
 
@@ -32,6 +33,7 @@ public class Paciente {
         this.cidade = dto.getCidade();
         this.uf = dto.getUf();
         this.cep = dto.getCep();
+        this.ativo = true;
     }
 
     public Paciente(Integer id, UpdatePacienteDTO dto){
@@ -139,5 +141,13 @@ public class Paciente {
 
     public void setCep(Long cep) {
         this.cep = cep;
+    }
+
+    public boolean isAtivo() {
+        return ativo;
+    }
+
+    public void setAtivo(boolean ativo) {
+        this.ativo = ativo;
     }
 }

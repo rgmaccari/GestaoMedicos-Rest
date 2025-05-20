@@ -409,7 +409,8 @@ CREATE TABLE consulta(
     id SERIAL PRIMARY KEY,
     medico_id INTEGER NOT NULL,
     paciente_id INTEGER NOT NULL,
-    data_hora DATETIME NOT NULL
+    data_hora DATETIME NOT NULL,
+    ativo BOOLEAN DEFAULT true
 );
 
 
