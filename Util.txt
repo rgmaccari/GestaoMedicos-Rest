@@ -409,9 +409,11 @@ CREATE TABLE consulta(
     id SERIAL PRIMARY KEY,
     medico_id INTEGER NOT NULL,
     paciente_id INTEGER NOT NULL,
-    data_hora DATETIME NOT NULL,
+    data_hora TIMESTAMP WITHOUT TIME ZONE NOT NULL,
     ativo BOOLEAN DEFAULT true
 );
+
+Utilizar: YYYY-MM-DDThh:mm:ss para data/hora.
 
 
 
