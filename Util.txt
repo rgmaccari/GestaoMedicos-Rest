@@ -413,7 +413,7 @@ CREATE TABLE consulta(
     ativo BOOLEAN DEFAULT true
 );
 
-Utilizar: YYYY-MM-DDThh:mm:ss para data/hora.
+-- Utilizar: YYYY-MM-DDThh:mm:ss para data/hora.
 
 
 
