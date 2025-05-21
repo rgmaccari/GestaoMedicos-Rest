@@ -63,8 +63,12 @@ public class ConsultaService {
         Integer medicoId = dto.getMedico_id();
         if (medicoId != null) {
             Medico medico = medicoRepository.findById(medicoId);
-            if (medico == null || !medico.isAtivo()) {
-                throw new BusinessException("Médico inativo ou não encontrado.");
+            if (medico == null) {
+                throw new BusinessException("Médico não encontrado.");
+            }
+
+            if(!medico.isAtivo()){
+                throw new BusinessException("Médico inativo..");
             }
         }
 
@@ -76,8 +80,6 @@ public class ConsultaService {
             medicoId = medicosDisponiveis.get(new Random().nextInt(medicosDisponiveis.size())).getId();
             dto.setMedico_id(medicoId);
         }
-
-
 
         //Apenas uma consulta por dia para o mesmo paciente
         boolean pacienteTemConsulta = consultaRepository.consultaNoDiaPorPaciente(dto.getPaciente_id(), dataHora.toLocalDate());

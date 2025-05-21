@@ -51,4 +51,12 @@ public class Consulta {
     public void setId(Integer id) {
         this.id = id;
     }
+
+    public boolean isAtivo() {
+        return ativo;
+    }
+
+    public void setAtivo(boolean ativo) {
+        this.ativo = ativo;
+    }
 }

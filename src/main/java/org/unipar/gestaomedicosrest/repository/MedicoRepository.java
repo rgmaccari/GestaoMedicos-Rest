@@ -119,6 +119,7 @@ public class MedicoRepository {
                 medico.setEmail(resultSet.getString("email"));
                 medico.setCrm(resultSet.getString("crm"));
                 medico.setEspecialidade(resultSet.getString("especialidade"));
+                medico.setAtivo((resultSet.getBoolean("ativo")));
             }
 
 

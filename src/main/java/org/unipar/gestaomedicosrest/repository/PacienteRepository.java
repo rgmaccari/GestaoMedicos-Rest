@@ -115,6 +115,7 @@ public class PacienteRepository {
                 paciente.setNome(resultSet.getString("nome"));
                 paciente.setEmail(resultSet.getString("email"));
                 paciente.setCpf(resultSet.getString("cpf"));
+                paciente.setAtivo(resultSet.getBoolean("ativo"));
             }
 
 

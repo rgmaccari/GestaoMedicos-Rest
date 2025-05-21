@@ -43,8 +43,20 @@ public class Paciente {
         this.logradouro = dto.getLogradouro();
     }
 
-    public Paciente(String nome){
+    public Paciente(Integer id, String nome, String email, Long telefone, String cpf, String logradouro, Integer numero, String complemento, String bairro, String cidade, String uf, Long cep, boolean ativo) {
+        this.id = id;
         this.nome = nome;
+        this.email = email;
+        this.telefone = telefone;
+        this.cpf = cpf;
+        this.logradouro = logradouro;
+        this.numero = numero;
+        this.complemento = complemento;
+        this.bairro = bairro;
+        this.cidade = cidade;
+        this.uf = uf;
+        this.cep = cep;
+        this.ativo = true;
     }
 
     public Integer getId() {
